@@ -47,12 +47,33 @@ namespace WordsCommentsExtractor
 		public void DeleteContentControls()
 		{
 			MainDocumentPart main = wordDocument.MainDocumentPart;
-			SdtBlock[] sdtBlock = main.Document.Body.Descendants<SdtBlock>().ToArray();
-			foreach (SdtBlock sdt in sdtBlock)
+			Console.WriteLine("Looking for Content controls to be deleted");
+			//SdtBlock[] sdtBlock = main.Document.Body.Descendants<SdtBlock>().ToArray();
+			//Console.WriteLine(sdtBlock.Length);
+			IEnumerable<SdtRun> sdtElement = main.Document.Body.Descendants<SdtRun>().ToArray();
+			Console.WriteLine(sdtElement.Count());
+
+			foreach (SdtRun sdtEl in sdtElement)
 			{
-				sdt.Remove();
-				Console.WriteLine("Deleting ContentCotnrols");
+				Console.WriteLine(sdtEl);
+				sdtEl.Remove();
+				Console.WriteLine("Deleting ContentControl Element");
 			}
+
+			Console.WriteLine(sdtElement.Count());
+
+			//foreach (SdtBlock sdt in sdtBlock)
+			//{
+			//	sdt.Remove();
+			//	Console.WriteLine("Deleting ContentCotnrols Blocks");
+			//}
+
+
+		}
+
+		public void SaveAndClose()
+		{
+			wordDocument.Close();
 		}
 
 		public List<string> GetComments()
